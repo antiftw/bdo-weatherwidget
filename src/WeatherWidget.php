@@ -19,13 +19,13 @@ class WeatherWidget extends BaseWidget implements TwigAwareInterface, CacheAware
     use CacheTrait;
     use StopwatchTrait;
 
-    protected $name = 'Weather Widget';
-    protected $target = AdditionalTarget::WIDGET_BACK_DASHBOARD_ASIDE_TOP;
-    protected $priority = 200;
-    protected $template = '@weather-widget/weather.html.twig';
-    protected $zone = RequestZone::BACKEND;
-    protected $cacheDuration = 1800;
-    protected $location = '';
+    protected ?string $name = 'Weather Widget';
+    protected string $target = AdditionalTarget::WIDGET_BACK_DASHBOARD_ASIDE_TOP;
+    protected ?int $priority = 200;
+    protected ?string $template = '@weather-widget/weather.html.twig';
+    protected ?string $zone = RequestZone::BACKEND;
+    protected int $cacheDuration = 1800;
+    protected string $location = '';
 
     public function run(array $params = []): ?string
     {
@@ -63,10 +63,6 @@ class WeatherWidget extends BaseWidget implements TwigAwareInterface, CacheAware
 
     private function getLocation(): string
     {
-        if (! $this->extension) {
-            return '';
-        }
-
-        return (string) $this->extension->getConfig()->get('location');
+        return (string) $this->extension?->getConfig()->get('location');
     }
 }
